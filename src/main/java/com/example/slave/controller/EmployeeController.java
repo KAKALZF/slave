@@ -31,4 +31,10 @@ public class EmployeeController {
         return "ok";
     }
 
+    @RequestMapping("/hello")
+    public String hello() {
+        System.out.println(Thread.currentThread().getName());
+        System.out.println("hello");
+        return "ok";
+    }
 }
