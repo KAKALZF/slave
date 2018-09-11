@@ -37,4 +37,7 @@ public class EmployeeController {
         System.out.println("hello");
         return "ok";
     }
+ /*   public empList(){
+
+    }*/
 }
