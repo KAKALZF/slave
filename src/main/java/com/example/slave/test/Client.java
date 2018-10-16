@@ -11,14 +11,14 @@ public class Client {
         BufferedReader bufferedReader = null;
         PrintWriter printWriter = null;
         try {
-            Socket localhost = new Socket("127.0.0.1", 9999);
+            Socket localhost = new Socket("127.0.0.1", 8080);
             String aaa = "hello";
             String bbb = "bbb";
-            bufferedReader = new BufferedReader(new InputStreamReader(localhost.getInputStream()));
             printWriter = new PrintWriter(localhost.getOutputStream());
             printWriter.println(aaa);
             printWriter.println(bbb);
             printWriter.flush();
+            bufferedReader = new BufferedReader(new InputStreamReader(localhost.getInputStream()));
             String s;
             while ((s = bufferedReader.readLine()) != null) {
                 System.out.println("接收到的内容s:" + s);
@@ -28,8 +28,8 @@ public class Client {
 
         } finally {
             try {
-                printWriter.close();
-                bufferedReader.close();
+                if (null!=printWriter) printWriter.close();
+                if (null!=bufferedReader)bufferedReader.close();
             } catch (IOException e) {
 
             }
