@@ -26,7 +26,7 @@ public class Department3 {
     public String toString() {
         return "Department{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='想·" + name + '\'' +
                 '}';
     }
 }
