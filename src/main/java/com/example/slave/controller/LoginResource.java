@@ -22,10 +22,10 @@ public class LoginResource {
     @Autowired
     private ILoginService loginService;
 
-    //退出的时候是get请求，主要是用于退出
+    //未登陆就访问的页面
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){
-        return "login";
+        return "please login first";
     }
 
     //post登录
@@ -38,7 +38,7 @@ public class LoginResource {
                 map.get("password").toString());
         //进行验证，这里可以捕获异常，然后返回对应信息
         subject.login(usernamePasswordToken);
-        return "login";
+        return "login success";
     }
 
     @RequestMapping(value = "/index")
@@ -49,13 +49,18 @@ public class LoginResource {
     //登出
     @RequestMapping(value = "/logout")
     public String logout(){
-        return "logout";
+        System.out.println("退出登录");
+        Subject subject = SecurityUtils.getSubject();
+        Object principal = subject.getPrincipal();
+        System.out.println("将要退出的用户是:"+principal.toString());
+        subject.logout();
+        return "logout successful";
     }
 
     //错误页面展示
     @RequestMapping(value = "/error",method = RequestMethod.POST)
     public String error(){
-        return "error ok!";
+        return "error page!";
     }
 
     //数据初始化
@@ -77,6 +82,7 @@ public class LoginResource {
     @RequiresPermissions("create")
     @RequestMapping(value = "/create")
     public String create(){
+
         return "Create success!";
     }
 }

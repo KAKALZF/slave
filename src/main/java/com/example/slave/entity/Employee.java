@@ -1,9 +1,8 @@
 package com.example.slave.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Table(name = "employee")
@@ -11,8 +10,41 @@ public class Employee {
     @Id
     @GeneratedValue
     private Long id;
+    //默认映射所有字段，需要更具体的设置可以使用@Column
     private String name;
     private String dept;
+    private Integer age;
+    @Transient//表示不需要映射到表中
+    private BigDecimal salary;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createTime;
+
+    public Date getCreatTime() {
+        return createTime;
+    }
+
+    public Employee setCreatTime(Date creatTime) {
+        this.createTime = creatTime;
+        return this;
+    }
+
+    public BigDecimal getSalary() {
+        return salary;
+    }
+
+    public Employee setSalary(BigDecimal salary) {
+        this.salary = salary;
+        return this;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public Employee setAge(Integer age) {
+        this.age = age;
+        return this;
+    }
 
     public Long getId() {
         return id;

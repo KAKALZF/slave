@@ -34,9 +34,9 @@ public class ShiroConfiguration {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String,String> map = new HashMap<String, String>();
-        //登出
-        map.put("/logout","logout");
-        //对所有用户认证
+        //登出,注释掉，如果这里配置了登出拦截器的话，访问/logout前就会被注释掉，再访问又会要求先登录
+        //map.put("/logout","logout");
+        //对所有用户认证,所有的url都需要经过验证器
         map.put("/**","authc");
         //登录
         shiroFilterFactoryBean.setLoginUrl("/login");
