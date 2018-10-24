@@ -5,10 +5,9 @@ import com.example.slave.jpa._02_many2one.Department;
 import com.example.slave.jpa._02_many2one.Employee2;
 import com.example.slave.jpa._03_one2many.Department3;
 import com.example.slave.jpa._03_one2many.Employee3;
-import com.example.slave.jpa.dao.Department3Dao;
-import com.example.slave.jpa.dao.DepartmentDao;
-import com.example.slave.jpa.dao.Employee2Dao;
-import com.example.slave.jpa.dao.Employee3Dao;
+import com.example.slave.jpa._04_many2one2many.Department4;
+import com.example.slave.jpa._04_many2one2many.Employee4;
+import com.example.slave.jpa.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -84,6 +83,45 @@ public class JpaTestController {
         System.out.println("===================");
         List<Employee3> employees = one.getEmployees();
         for (Employee3 employee : employees) {
+            System.out.println(employee.toString());
+        }
+        return "ok";
+    }
+
+
+    //==================oneToManyToOne=================
+    @Autowired
+    private Employee4Dao employee4Dao;
+    @Autowired
+    private Department4Dao department4Dao;
+
+    @GetMapping("/oneToManyToOneSave")
+    public String oneToManyToOneSave() {
+        /*
+        * 需要先保存部门，再保存员工，否则报错
+        * */
+        Employee4 employee = new Employee4();
+        employee.setName("kaka");
+        Department4 department = new Department4();
+        department.setName("技术部");
+        Department4 save = department4Dao.save(department);
+        employee.setDepartment(save);
+        employee4Dao.save(employee);
+        return "ok";
+    }
+
+    @GetMapping("/oneToManyToOneGet")
+    public String oneToManyToOneGet() {
+        System.out.println("根据员工查部门");
+        Employee4 one = employee4Dao.findOne(2L);
+        System.out.println("===================");
+        //采用的是懒加载，用到的时候采取查询部门信息
+        Department4 department = one.getDepartment();
+        System.out.println(department.toString());
+        System.out.println("根据部门查员工");
+        Department4 dept = department4Dao.getOne(2L);
+        List<Employee4> employees = dept.getEmployees();
+        for (Employee4 employee : employees) {
             System.out.println(employee.toString());
         }
         return "ok";
