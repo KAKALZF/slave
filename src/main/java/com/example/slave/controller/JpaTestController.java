@@ -7,6 +7,10 @@ import com.example.slave.jpa._03_one2many.Department3;
 import com.example.slave.jpa._03_one2many.Employee3;
 import com.example.slave.jpa._04_many2one2many.Department4;
 import com.example.slave.jpa._04_many2one2many.Employee4;
+import com.example.slave.jpa._05_many2many.Student;
+import com.example.slave.jpa._05_many2many.Teacher;
+import com.example.slave.jpa._06_component.Address;
+import com.example.slave.jpa._06_component.Company;
 import com.example.slave.jpa.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -124,6 +128,65 @@ public class JpaTestController {
         for (Employee4 employee : employees) {
             System.out.println(employee.toString());
         }
+        return "ok";
+    }
+
+    //==================many2many=================
+    @Autowired
+    private StudentDao studentDao;
+    @Autowired
+    private TeacherDao teacherDao;
+
+    /*多对多会创建中间表，当时中间表并没有保存，什么回事？怎样才能保存?*/
+    @GetMapping("/manyToManySave")
+    public String manyToManySave() {
+        Student student = new Student();
+        student.setName("lin");
+        Teacher t1 = new Teacher();
+        Teacher t2 = new Teacher();
+        t1.setName("li");
+        t2.setName("han");
+        ArrayList<Teacher> teachers = new ArrayList<>();
+        t1 = teacherDao.save(t1);
+        t2 = teacherDao.save(t2);
+        teachers.add(t1);
+        teachers.add(t2);
+        student.setTeachers(teachers);
+        studentDao.save(student);
+        return "ok";
+    }
+
+    @GetMapping("/manyToManyGet")
+    public String manyToManyGet() {
+        Student one = studentDao.getOne(1L);
+        System.out.println(one.toString());
+        List<Teacher> teachers = one.getTeachers();
+        for (Teacher teacher : teachers) {
+            System.out.println(teacher.toString());
+        }
+        return "ok";
+    }
+
+    //==================component=================================
+
+    @Autowired
+    private CompanyDao companyDao;
+
+    @GetMapping("/component")
+    public String component() {
+        Company company = new Company();
+        company.setName("枫叶科技");
+        Address address = new Address();
+        address.setProvince("广东省");
+        address.setCity("广州市");
+        address.setStreet("天河区");
+        Address regAdd = new Address();
+        regAdd.setProvince("北京市");
+        regAdd.setCity("海淀区");
+        regAdd.setStreet("解放街道");
+        company.setAddress(address);
+        company.setRegAddress(regAdd);
+        companyDao.save(company);
         return "ok";
     }
 }
