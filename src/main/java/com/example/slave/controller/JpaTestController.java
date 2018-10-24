@@ -11,6 +11,8 @@ import com.example.slave.jpa._05_many2many.Student;
 import com.example.slave.jpa._05_many2many.Teacher;
 import com.example.slave.jpa._06_component.Address;
 import com.example.slave.jpa._06_component.Company;
+import com.example.slave.jpa._08_casecade.OrderBill;
+import com.example.slave.jpa._08_casecade.OrderBillItem;
 import com.example.slave.jpa.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -187,6 +189,36 @@ public class JpaTestController {
         company.setAddress(address);
         company.setRegAddress(regAdd);
         companyDao.save(company);
+        return "ok";
+    }
+
+    //===================casecade=============================
+
+    @Autowired
+    private OrderBillDao orderBillDao;
+    @Autowired
+    private OrderBillItemDao orderBillItemDao;
+
+    @GetMapping("/casecadeSave")
+    public String casecadeSave() {
+        OrderBill orderBill = new OrderBill();
+        orderBill.setSn("test");
+        ArrayList<OrderBillItem> items = new ArrayList<>();
+        OrderBillItem item1 = new OrderBillItem();
+        OrderBillItem item2 = new OrderBillItem();
+        item1.setProduceName("铅笔");
+        item2.setProduceName("手抄本");
+        items.add(item1);
+        items.add(item2);
+        orderBill.setItems(items);
+        orderBillDao.save(orderBill);
+        return "ok";
+    }
+
+    @GetMapping("/casecadeDel")
+    public String casecadeDel() {
+        OrderBill one = orderBillDao.findOne(1L);
+        orderBillDao.delete(one);
         return "ok";
     }
 }
