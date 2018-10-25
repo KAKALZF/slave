@@ -7,6 +7,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -83,6 +84,19 @@ public class LoginResource {
     @RequestMapping(value = "/create")
     public String create(){
 
+        return "Create success!";
+    }
+
+    //注解的使用
+
+    @RequestMapping(value = "/sessionTime")
+    public String sessionTime(){
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        long timeout = session.getTimeout();
+        System.out.println("默认超时时间:"+timeout);
+        System.out.println("sessionId:"+session.getId());
+        session.setTimeout(1000L*5);
         return "Create success!";
     }
 }
