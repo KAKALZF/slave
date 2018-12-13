@@ -17,11 +17,10 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@EnableAutoConfiguration
 @RequestMapping("/employee")
 public class EmployeeController {
     @Autowired
-    KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
     @Autowired
     private EmployeeService employeeService;
 
@@ -55,7 +54,6 @@ public class EmployeeController {
         System.out.println(Thread.currentThread().getName());
         return "ok";
     }
-
 
 
     @GetMapping("findEmps")
