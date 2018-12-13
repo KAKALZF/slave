@@ -15,7 +15,7 @@ public class User {
     /*
     * 这样配置并没有解决中间表多方的唯一索引的问题，还是需要手动修改数据库，https://windshg.iteye.com/blog/1005385，该参考并不能解决问题
     * */
-    @JoinTable(joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id",unique = false)})
+    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id", unique = false)})
     public List<Role> roles;
 
     public String getName() {
