@@ -1,9 +1,6 @@
 package com.example.slave.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -12,7 +9,7 @@ public class Role {
     @GeneratedValue
     public Long id;
     public String name;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     public List<Resource> resources;
 
     public Long getId() {

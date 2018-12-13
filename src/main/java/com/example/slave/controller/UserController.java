@@ -43,37 +43,41 @@ public class UserController {
 
     @GetMapping("/save")
     public String save() {
-        User user = new User().setName("kaka").setPassword("test");
         Random random = new Random();
-        Role r1 = new Role().setName("角色" + random.nextInt(100));
-        Role r2 = new Role().setName("角色" + random.nextInt(100));
-        roleService.save(r1);
-        roleService.save(r2);
-        ArrayList<Role> roles = new ArrayList<>();
-        roles.add(r1);
-        roles.add(r2);
+        int i = random.nextInt(100);
+        User user = new User().setName("kaka"+i).setPassword("test"+i);
+        ArrayList<Long> roleIds = new ArrayList<>();
+        roleIds.add(1L);
+        roleIds.add(2L);
+        List<Role> roles = roleDao.findAll(roleIds);
+        System.out.println("查找role==========");
+        for (Role role : roles) {
+            System.out.println(role);
+        }
         user.setRoles(roles);
-        userService.save(user);
+        userDao.save(user);
         return "ok";
     }
 
     @GetMapping("/update")
     public String update() {
         User user = userDao.findOne(1L);
-        user.setName("nameUpate");
+        user.setName("nameUpate2");
         //更新多方的角色
         List<Role> roles = user.getRoles();
-        Role one = roleDao.findOne(6L);
+        Role one = roleDao.findOne(3L);
         System.out.println("================" + one);
+//        Role roleUpdate = new Role().setName("roleUpdate");
         roles.add(one);
+        roles.remove(0);
         //对象已存在，更新
         userDao.save(user);
-
         return "success";
     }
 
     @GetMapping("/delete")
     public String delete() {
+        userDao.delete(1L);
         return "success";
     }
 }

@@ -1,5 +1,6 @@
 package com.example.slave.controller;
 
+import com.example.slave.entity.Resource;
 import com.example.slave.entity.Role;
 import com.example.slave.service.RoleService;
 import com.example.slave.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 @RestController
@@ -27,6 +29,10 @@ public class RoleController {
         Random random = new Random();
         int i = random.nextInt(100);
         Role role = new Role().setName("角色" + i);
+        Resource resource = new Resource().setName("资源" + random.nextInt(100));
+        ArrayList<Resource> resources = new ArrayList<>();
+        resources.add(resource);
+        role.setResources(resources);
         roleService.save(role);
         return "success";
     }
