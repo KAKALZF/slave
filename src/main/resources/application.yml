@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://39.108.239.32:3306/ample17?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://39.108.239.32:3306/jpa?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: admin
     type: com.alibaba.druid.pool.DruidDataSource
@@ -29,10 +29,3 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
 
-#      activemq:
-#            broker-url: tcp://39.108.239.32:61616
-#            user : admin
-#            password : admin
-#mybatis:
-#        mapperLocations: classpath:mapper/*.xml
-#        typeAliasesPackage: com.example.demo.entity

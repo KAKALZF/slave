@@ -1,22 +1,22 @@
 package com.example.slave.entity;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
-public class Role {
+public class Resource {
     @Id
     @GeneratedValue
     public Long id;
     public String name;
-    @OneToMany(cascade = CascadeType.ALL)
-    public List<Resource> resources;
 
     public Long getId() {
         return id;
     }
 
-    public Role setId(Long id) {
+    public Resource setId(Long id) {
         this.id = id;
         return this;
     }
@@ -25,23 +25,14 @@ public class Role {
         return name;
     }
 
-    public Role setName(String name) {
+    public Resource setName(String name) {
         this.name = name;
-        return this;
-    }
-
-    public List<Resource> getResources() {
-        return resources;
-    }
-
-    public Role setResources(List<Resource> resources) {
-        this.resources = resources;
         return this;
     }
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "Resource{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

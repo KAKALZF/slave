@@ -1,22 +1,15 @@
 package com.example.slave.controller;
 
-import com.example.slave.dao.UserRepository;
 import com.example.slave.entity.Employee;
-import com.example.slave.entity.Permission;
-import com.example.slave.entity.Role;
-import com.example.slave.entity.User;
 import com.example.slave.service.EmployeeService;
-import com.example.slave.service.impl.EmployeeServcieImpl;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
@@ -24,15 +17,12 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@EnableAutoConfiguration
 @RequestMapping("/employee")
 public class EmployeeController {
     @Autowired
-    KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
     @Autowired
     private EmployeeService employeeService;
-    @Autowired
-    private UserRepository userRepository;
 
     @RequestMapping("/insert")
     public String insert() {
@@ -65,23 +55,6 @@ public class EmployeeController {
         return "ok";
     }
 
-    /*   public empList(){
-
-       }*/
-    @GetMapping("testJPA")
-    public String testJPA() {
-        Object principal = SecurityUtils.getSubject().getPrincipal();
-        User admin = userRepository.findByName(principal.toString());
-        List<Role> roles = admin.getRoles();
-        for (Role role : roles) {
-            String roleName = role.getRoleName();
-            System.out.println("用户角色名字:" + roleName);
-            for (Permission permission : role.getPermissions()) {
-                System.out.println("权限名字:" + permission.getPermission());
-            }
-        }
-        return "test JPA";
-    }
 
     @GetMapping("findEmps")
     public List<Employee> findEmps() {

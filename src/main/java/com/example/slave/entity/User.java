@@ -5,45 +5,52 @@ import java.util.List;
 
 @Entity
 public class User {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(unique = true)
-    private String name;
-    private Integer password;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<Role> roles;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @GeneratedValue
+    public Long id;
+    public String name;
+    public String password;
+    //如果这里的角色和用户是一对多的关系，只需要维护中间表的关系即可,不需要级联
+    @OneToMany
+    /*
+    * 这样配置并没有解决中间表多方的唯一索引的问题，还是需要手动修改数据库，https://windshg.iteye.com/blog/1005385，该参考并不能解决问题
+    * */
+    @JoinTable(name = "user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id", unique = false)})
+    public List<Role> roles;
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public User setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
     }
 
     public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Role> roles) {
+    public User setRoles(List<Role> roles) {
         this.roles = roles;
+        return this;
     }
 
-    public Integer getPassword() {
-        return password;
-    }
-
-    public void setPassword(Integer password) {
-        this.password = password;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
