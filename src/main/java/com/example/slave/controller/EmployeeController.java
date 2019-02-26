@@ -32,7 +32,9 @@ public class EmployeeController {
         employee.setName("kaka123");
         employee.setCreatTime(new Date());
         employeeService.insert(employee);
-        kafkaTemplate.send("mykafka", "kakalzf");
+        for (int i = 0; i < 100; i++) {
+            kafkaTemplate.send("mykafka", "kakalzf" + i);
+        }
         return "ok";
     }
 
