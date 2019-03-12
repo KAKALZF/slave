@@ -19,16 +19,16 @@ public class SlaveApplication {
 		SpringApplication.run(SlaveApplication.class, args);
 	}
 
-	@Bean
+/*	@Bean
 	KafkaListenerContainerFactory<?> batchFactory() {
 		ConcurrentKafkaListenerContainerFactory<String, String> factory = new
 				ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(new DefaultKafkaConsumerFactory<>(consumerConfigs()));
 		factory.setBatchListener(true); // 开启批量监听
 		return factory;
-	}
+	}*/
 
-	@Bean
+/*	@Bean
 	public Map<String, Object> consumerConfigs() {
 		Map<String, Object> props = new HashMap<>();
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
@@ -41,5 +41,5 @@ public class SlaveApplication {
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 		return props;
-	}
+	}*/
 }
