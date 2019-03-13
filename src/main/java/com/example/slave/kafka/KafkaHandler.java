@@ -15,14 +15,14 @@ import java.util.Date;
 public class KafkaHandler {
     @KafkaListener(topics = {"mykafka"})
     public void listenT1(String name) throws Exception {
-        if ("kakalzf0".equals(name)) {
+/*        if ("kakalzf0".equals(name)) {
             System.out.println("消费者开始时间:" + new Date());
         }
         System.out.println("消费者1消息:" + name);
         if ("kakalzf99".equals(name)) {
             System.out.println("消费结束时间:" + new Date());
-        }
-        Thread.sleep(500);
+        }*/
+        System.out.println(name);
     }
     /*@KafkaListener(topics = {"mykafka"})
     public void listenT2(String name) throws Exception {
