@@ -1,5 +1,6 @@
 package com.example.slave.kafka;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,8 @@ import java.util.Date;
  */
 @Component
 public class KafkaHandler {
-    @KafkaListener(topics = {"mykafka"})
-    public void listenT1(String name) throws Exception {
+    @KafkaListener(topics = {"topicForTest"})
+    public void listenT1(ConsumerRecord<String,String> record) throws Exception {
 /*        if ("kakalzf0".equals(name)) {
             System.out.println("消费者开始时间:" + new Date());
         }
@@ -22,7 +23,11 @@ public class KafkaHandler {
         if ("kakalzf99".equals(name)) {
             System.out.println("消费结束时间:" + new Date());
         }*/
-        System.out.println(name);
+        System.out.println(record.key());
+        System.out.println(record.value());
+        System.out.println(record.offset());
+        System.out.println(record.partition());
+        System.out.println(record.topic());
     }
     /*@KafkaListener(topics = {"mykafka"})
     public void listenT2(String name) throws Exception {
